@@ -57,7 +57,7 @@ def main():
 
    # Take one idiom from that page, and format it
    idiom = format_idiom(random.choice(soup.find_all('b')).contents[0])
-   tweet = 'Holy ' + idiom + ' Batman!'
+   tweet = 'Holy ' + idiom + ', Batman!'
    print tweet
 
 
