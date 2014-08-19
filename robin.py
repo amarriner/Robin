@@ -33,7 +33,7 @@ def format_idiom(s):
    s = s.replace('  ', ' ')
 
    # Remove most punctuation
-   punctuation = re.compile(r'[^A-Za-z0-9 -]')
+   punctuation = re.compile(r'[^A-Za-z0-9 -\']')
    s = re.sub(punctuation, '', s)
 
 
