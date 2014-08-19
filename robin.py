@@ -26,6 +26,10 @@ def format_idiom(s):
    parenthetical = re.compile(r'\(.*?\)')
    s = re.sub(parenthetical, '', s)
 
+   # Sometimes the previous regex will leave two spaces in a row and since I suck too much with regexes to do
+   # this all in one step, I'll strip them out here
+   s = s.replace('  ', ' ')
+
    # Remove most punctuation
    punctuation = re.compile(r'[^A-Za-z0-9 -]')
    s = re.sub(punctuation, '', s)
@@ -44,7 +48,6 @@ def main():
    # There are two UL tags that contain links to pages with idioms on them
    # Pick one at random and then a link at random within that UL to find the URL to scrape for an idom
    link = random.choice(random.choice(soup.find_all('ul', limit=2)).find_all('a'))
-   print link.get('href')
 
    # Get the randomly picked page with a list of idioims
    request = requests.get(link.get('href'))
