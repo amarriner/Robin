@@ -4,11 +4,13 @@
 
 from bs4 import BeautifulSoup
 
+import keys
 import random
 import re
 import requests
 import string
 import sys
+import twitter
 
 
 # Scraping www.idiomconnection.com for idioms
@@ -55,8 +57,15 @@ def main():
 
    # Take one idiom from that page, and format it
    idiom = format_idiom(random.choice(soup.find_all('b')).contents[0])
+   tweet = 'Holy ' + idiom + ' Batman!'
+   print tweet
 
-   print 'Holy ' + idiom + ' Batman!'
+
+   # Connect to Twitter
+   api = twitter.Api(keys.consumer_key, keys.consumer_secret, keys.access_token, keys.access_token_secret)
+
+   # Tweet
+   status = api.PostUpdate(tweet)
 
 
 if __name__ == '__main__':
