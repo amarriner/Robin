@@ -17,8 +17,27 @@ import twitter
 IDIOM_BASE = 'http://www.idiomconnection.com'
 
 
-def format_idiom(s):
+def format_idiom(idiom):
    """Returns idiom lowercase without parentheticals, punctuation and removing preceeding 'A ...' """
+
+   # Sometimes the idiom is one thing OR another, pick one
+   if len(idiom.lower().split(' <i>or</i> ')):
+      idiom = random.choice(idiom.lower().split(' <i>or</i> '))
+
+   # Some idioms have two words separated by a slash, we should pick one of those words to use
+   s = ''
+   for w in idiom.split(' '):
+      if len(w.split('/')) > 1:
+         w = random.choice(w.split('/'))
+
+      if len(s):
+         s += ' '
+
+      s += w
+
+   # Replace (someone's) or one's with your
+   s = s.replace('one\'s', 'your')
+   s = s.replace('(someone`s)', 'your')
 
    # Strip leading 'A ' if it exists
    if s[:2].upper() == 'A ':
