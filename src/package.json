@@ -9,7 +9,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "chowdown": "^1.2.3",
-    "twitter": "^1.7.1"
+    "twit": "^2.2.11"
   },
   "scripts": {
     "main": "node -e \"require('./app.js').lambdaHandler()\"",

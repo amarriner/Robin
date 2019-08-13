@@ -4,7 +4,7 @@ let response;
 
 const chowdown = require("chowdown");
 const keys = require("./keys.json");
-const Twitter = require('twitter');
+const Twit = require('twit');
 
 /**
  *
@@ -27,37 +27,44 @@ exports.lambdaHandler = async (event, context) => {
 
     try {
 
+        // const ret = await axios(url);
+        var response = { 
+            "statusCode": 200,
+            "body": ""
+        };
+
         var idiom = formatIdiom(await getLink(idiomBase)
                             .then(getIdioms)
                             .then(getIdiom));
 
-        var client = new Twitter({
+        var T = new Twit({
             consumer_key: keys.consumerKey,
             consumer_secret: keys.consumerSecret,
-            access_token_key: keys.accessToken,
+            access_token: keys.accessToken,
             access_token_secret: keys.accessTokenSecret
         });
 
-        client.post('statuses/update', { 
+        response.body =  JSON.stringify({
+            message: idiom,
+            // location: ret.data.trim()
+        });
+
+        await T.post('statuses/update', { 
             status: idiom 
-        }, function (error, tweet, response) {
+        }, function (error, tweet, resp) {
+
+            response.statusCode = resp.statusCode; 
 
             if (error) {
-                return console.log(error);
+                console.log(error);
             }
 
-            console.log(tweet);
+            console.log(resp.statusCode);
+            console.log(tweet.text);
+            console.log(response);
+            return response;
 
         });
-                              
-        // const ret = await axios(url);
-        response = { 
-            'statusCode': 200,
-            'body': JSON.stringify({
-                message: idiom,
-                // location: ret.data.trim()
-            })
-        };
         
     } catch (err) {
         console.log(err);
@@ -149,8 +156,6 @@ function formatIdiom(inputIdiom) {
 
         }
 
-        console.log(word);
-
         if (str && str.length) {
             str += " ";
         }
@@ -190,6 +195,6 @@ function formatIdiom(inputIdiom) {
     //
     idiom = idiom.replace(/[^A-Za-z0-9 -\']/g, "");
      
-    return "Holy " + idiom.toLowerCase() + ", Batman!";
+    return "Holy " + idiom.toLowerCase().trim() + ", Batman!";
 
 }
