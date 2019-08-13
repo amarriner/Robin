@@ -1,0 +1,48 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "sam build",
+            "type": "shell",
+            "command": "sam build",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "sam package",
+            "type": "shell",
+            "command": "sam package --s3-bucket amarriner-lambda-bucket --template-file .aws-sam\\build\\template.yaml --output-template packaged.yaml",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "sam deploy",
+            "type": "shell",
+            "command": "sam deploy --template-file packaged.yaml --region us-east-1 --capabilities CAPABILITY_IAM --stack-name aws-sam-amarriner",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "npm run main",
+            "type": "shell",
+            "command": "npm run main",
+            "options": {
+                "cwd": "src/"
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "npm install",
+            "type": "shell",
+            "command": "npm install",
+            "options": {
+                "cwd": "src/"
+            },
+            "group": "build",
+            "problemMatcher": []
+        }
+    ]
+}
