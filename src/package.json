@@ -7,7 +7,7 @@
   "author": "amarriner",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "chowdown": "^1.2.3",
     "twit": "^2.2.11"
   },
